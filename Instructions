@@ -1,0 +1,1 @@
+In order to use this tool for examining the relationship between citation count and abstract readability, replace scopus-3.csv with a csv file who has a unique idenitifier in column 1, citation count in column 2, and abstract in column 4.  
