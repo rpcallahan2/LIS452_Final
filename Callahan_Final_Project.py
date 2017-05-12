@@ -1,8 +1,8 @@
+from scipy import stats
 import readability
 import csv
-import nltk
+import tokenize_uk
 import numpy
-import scipy
 
 def main():
     with open('scopus-3.csv','rb') as csvfile: #open the citation and abstract data file
@@ -21,8 +21,8 @@ def main():
     data_set = {}                                                              
     for key in citation_set:
         (citation, abstract) = citation_set[key]
-        text = nltk.word_tokenize(abstract, language='english')                #prepping the abstract for analysis
         try:
+            text = tokenize_uk.tokenize_sents(abstract)                        #prepping the abstract for analysis
             read_scores = readability.getmeasures(text)                        #analyzing the abstract
             data_dict = read_scores[u'readability grades']
             data_set[key] = (citation, data_dict[u'FleschReadingEase'])        #getting a chosen metric
@@ -36,7 +36,7 @@ def main():
         readability_scores.append(read)                                        #creating a list of readability scores
     x = numpy.array(readability_scores)                                        #turning the lists into arrays
     y = numpy.array(citation_scores)
-    stats = scipy.stats.linregress(x, y)                                       #basic statistical analysis
-    print stats
+    stat = stats.linregress(x, y)                                              #basic statistical analysis
+    print stat
 
 main()
